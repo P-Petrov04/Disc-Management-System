@@ -1,8 +1,12 @@
-
+﻿
 using System;
 using Common.Repositories;
 using Common.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 
 namespace API
 {
@@ -21,16 +25,43 @@ namespace API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
+
+            //Configure JWT Authentication
+            var secretKey = builder.Configuration["JwtSettings:SecretKey"] 
+                ?? throw new InvalidOperationException("SECRET KEY IS MISSING");
+            var key = Encoding.UTF8.GetBytes(secretKey);
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false; //Set to true if using HTTPS in production
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false, //Change this if you want to validate issuer
+                        ValidateAudience = false //Change this if you want to validate audience
+                    };
+                });
+
+            builder.Services.AddAuthorization();
+
+
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
+        
             app.UseHttpsRedirection();
+
 
             app.UseAuthorization();
 
