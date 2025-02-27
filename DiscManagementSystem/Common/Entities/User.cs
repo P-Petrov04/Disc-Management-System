@@ -26,6 +26,10 @@ namespace Common.Entities
         [MaxLength(100)]
         public string? Email { get; set; }
 
+        [Required]
+        [MaxLength(20)]
+        public string? Password { get; set; }
+
         [MaxLength(15)]
         public string? PhoneNumber { get; set; }
         public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;

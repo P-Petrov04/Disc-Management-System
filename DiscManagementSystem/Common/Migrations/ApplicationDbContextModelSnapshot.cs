@@ -17,7 +17,7 @@ namespace Common.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.2")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -125,6 +125,11 @@ namespace Common.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("PhoneNumber")
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
@@ -138,6 +143,19 @@ namespace Common.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            Email = "admin@email.com",
+                            FirstName = "Admin",
+                            IsActive = true,
+                            LastName = "User",
+                            Password = "adminPassword",
+                            PhoneNumber = "1234567890",
+                            RegistrationDate = new DateTime(2025, 2, 27, 14, 29, 32, 849, DateTimeKind.Utc).AddTicks(9589)
+                        });
                 });
 
             modelBuilder.Entity("Common.Entities.Rental", b =>

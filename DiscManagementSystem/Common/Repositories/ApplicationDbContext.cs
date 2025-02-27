@@ -34,6 +34,20 @@ namespace Common.Repositories
                 .HasIndex(u => u.Email)
                 .IsUnique();
 
+            modelBuilder.Entity<User>().HasData(
+                    new User
+                    {
+                        UserId = 1, // Ensure this ID is unique
+                        FirstName = "Admin",
+                        LastName = "User",
+                        Email = "admin@email.com",
+                        Password = "adminPassword",
+                        PhoneNumber = "1234567890",
+                        RegistrationDate = DateTime.UtcNow,
+                        IsActive = true
+                    }
+            );
+
             base.OnModelCreating(modelBuilder);
         }
     }
