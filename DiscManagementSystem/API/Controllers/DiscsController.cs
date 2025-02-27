@@ -86,4 +86,45 @@ public class DiscsController : ControllerBase
             Data = discs
         });
     }
+
+    /// <summary>
+    /// Update an existing disc (Admin only)
+    /// </summary>
+    [HttpPut("{id}")]
+    [Authorize(Policy = "AdminOnly")]
+    public IActionResult UpdateDisc(int id, [FromBody] UpdateDiscModel model)
+    {
+        var disc = _discRepository.FirstOrDefault(d => d.DiscId == id);
+        if (disc == null)
+        {
+            return NotFound(new { Message = "Disc not found." });
+        }
+
+        // Update only fields that are provided
+        if (!string.IsNullOrEmpty(model.Title)) disc.Title = model.Title;
+        if (!string.IsNullOrEmpty(model.Artist)) disc.Artist = model.Artist;
+        if (model.ReleaseDate.HasValue) disc.ReleaseDate = model.ReleaseDate.Value;
+        if (!string.IsNullOrEmpty(model.Format)) disc.Format = model.Format;
+        if (model.DurationMinutes.HasValue) disc.DurationMinutes = model.DurationMinutes.Value;
+
+        _discRepository.Update(disc);
+        return Ok(new { Message = "Disc updated successfully.", Disc = disc });
+    }
+
+    /// <summary>
+    /// Delete a disc (Admin only)
+    /// </summary>
+    [HttpDelete("{id}")]
+    [Authorize(Policy = "AdminOnly")]
+    public IActionResult DeleteDisc(int id)
+    {
+        var disc = _discRepository.FirstOrDefault(d => d.DiscId == id);
+        if (disc == null)
+        {
+            return NotFound(new { Message = "Disc not found." });
+        }
+
+        _discRepository.Delete(disc);
+        return Ok(new { Message = "Disc deleted successfully." });
+    }
 }
