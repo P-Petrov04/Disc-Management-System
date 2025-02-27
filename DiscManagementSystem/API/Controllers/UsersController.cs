@@ -4,6 +4,7 @@ using Common.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 [Route("api/[controller]")]
@@ -16,18 +17,13 @@ public class UsersController : ControllerBase
     {
         _userRepository = userRepository;
     }
-
-    [HttpGet]
-    public IActionResult GetUser()
-    {
-        return Ok(new { Message = "List of users will be returned here" });
-    }
-
+  
+    /// <returns>Confirmation message and created user</returns>
     [HttpPost("create")]
     [Authorize(Policy = "AdminOnly")]
     public IActionResult CreateUser([FromBody] CreateUserModel model)
     {
-        if(model == null)
+        if (model == null)
         {
             return BadRequest("User data is required.");
         }
@@ -46,4 +42,32 @@ public class UsersController : ControllerBase
         _userRepository.Add(user);
         return Ok(new { Message = "User created successfully.", User = user });
     }
+
+    /// <returns>List of users with pagination metadata</returns>
+    [HttpGet]
+    [Authorize(Roles = "Admin")]
+    public IActionResult GetUsers(int page = 1, int size = 10, string? email = null)
+    {
+        var query = _userRepository.GetAll().AsQueryable();
+
+        if (!string.IsNullOrEmpty(email))
+        {
+            query = query.Where(u => u.Email != null && u.Email.ToLower().Contains(email.ToLower()));
+        }
+
+        var totalUsers = query.Count();
+        var users = query
+            .Skip((page - 1) * size)
+            .Take(size)
+            .ToList();
+
+        return Ok(new
+        {
+            TotalUsers = totalUsers,
+            Page = page,
+            Size = size,
+            Users = users
+        });
+    }
+
 }
