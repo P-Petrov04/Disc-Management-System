@@ -100,7 +100,6 @@ public class DiscsController : ControllerBase
             return NotFound(new { Message = "Disc not found." });
         }
 
-        // Update only fields that are provided
         if (!string.IsNullOrEmpty(model.Title)) disc.Title = model.Title;
         if (!string.IsNullOrEmpty(model.Artist)) disc.Artist = model.Artist;
         if (model.ReleaseDate.HasValue) disc.ReleaseDate = model.ReleaseDate.Value;

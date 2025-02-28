@@ -71,7 +71,6 @@ public class UsersController : ControllerBase
     }
 
 
-
     /// <summary>
     /// Update an existing user (Admin only)
     /// </summary>
@@ -95,8 +94,6 @@ public class UsersController : ControllerBase
         _userRepository.Update(user);
         return Ok(new { Message = "user updated successfully.", user = user });
     }
-
-
 
 
     /// <summary>
