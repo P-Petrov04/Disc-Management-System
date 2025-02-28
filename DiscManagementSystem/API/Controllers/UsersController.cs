@@ -70,4 +70,50 @@ public class UsersController : ControllerBase
         });
     }
 
+
+
+    /// <summary>
+    /// Update an existing user (Admin only)
+    /// </summary>
+    [HttpPut("{id}")]
+    [Authorize(Policy = "AdminOnly")]
+    public IActionResult UpdateUser(int id, [FromBody] UpdateUserModel model)
+    {
+        var user = _userRepository.FirstOrDefault(d => d.UserId == id);
+        if (user == null)
+        {
+            return NotFound(new { Message = "User not found." });
+        }
+
+        if (!string.IsNullOrEmpty(model.FirstName)) user.FirstName = model.FirstName;
+        if (!string.IsNullOrEmpty(model.LastName)) user.LastName = model.LastName;
+        if (!string.IsNullOrEmpty(model.Email)) user.Email = model.Email;
+        if (!string.IsNullOrEmpty(model.Password)) user.Password = model.Password;
+        if (!string.IsNullOrEmpty(model.PhoneNumber)) user.PhoneNumber = model.PhoneNumber;
+
+
+        _userRepository.Update(user);
+        return Ok(new { Message = "user updated successfully.", user = user });
+    }
+
+
+
+
+    /// <summary>
+    /// Delete a user (Admin only)
+    /// </summary>
+    [HttpDelete("{id}")]
+    [Authorize(Policy = "AdminOnly")]
+    public IActionResult DeleteUser(int id)
+    {
+        var user = _userRepository.FirstOrDefault(d => d.UserId == id);
+        if (user == null)
+        {
+            return NotFound(new { Message = "user not found." });
+        }
+
+        _userRepository.Delete(user);
+        return Ok(new { Message = "user deleted successfully." });
+    }
+
 }
