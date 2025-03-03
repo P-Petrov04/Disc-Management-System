@@ -47,9 +47,6 @@ public class DiscsController : ControllerBase
     [HttpGet]
     public IActionResult GetDiscs(int page = 1, int size = 5, string? title = null, string? artist = null)
     {
-
-
-
         if (page < 1 || size < 1)
         {
             return BadRequest("Page and size must be positive numbers.");
