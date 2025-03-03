@@ -25,9 +25,11 @@ namespace Common.Entities
 
         [Required]
         [MaxLength(20)]
-        public string? Format { get; set; } // CD, Vinyl, Cassette
+        public string? Format { get; set; }
         public bool IsAvailable { get; set; } = true;
-        public int DurationMinutes { get; set; } // Duration in minutes
+        public int DurationMinutes { get; set; }
+
+        public string? PhotoUrl { get; set; }
 
         public ICollection<Rental> Rentals { get; set; }
     }

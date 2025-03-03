@@ -11,26 +11,68 @@ using System.Threading.Tasks;
 [ApiController]
 public class RentalsController : ControllerBase
 {
-    private readonly BaseRepository<Disc> _discRepository;
-    private readonly BaseRepository<User> _userRepository;
     private readonly BaseRepository<Rental> _rentalRepository;
+    private readonly BaseRepository<User> _userRepository;
+    private readonly BaseRepository<Disc> _discRepository;
 
-    public RentalsController(BaseRepository<Disc> discRepository, BaseRepository<User> userRepository, BaseRepository<Rental> rentalRepository)
+    public RentalsController(BaseRepository<Rental> rentalRepository, BaseRepository<User> userRepository, BaseRepository<Disc> discRepository)
     {
-        _discRepository = discRepository;
-        _userRepository = userRepository;
         _rentalRepository = rentalRepository;
+        _userRepository = userRepository;
+        _discRepository = discRepository;
     }
 
-    /// <summary>
-    /// Create a new rental
-    /// </summary>
     [HttpPost("create")]
     public IActionResult CreateRental([FromBody] CreateRentalModel model)
     {
         if (model == null)
         {
             return BadRequest("Rental data is required.");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        // Validate input
+        if (model.UserId <= 0)
+        {
+            return BadRequest("Invalid UserId.");
+        }
+
+        if (model.DiscId <= 0)
+        {
+            return BadRequest("Invalid DiscId.");
+        }
+
+        if (model.RentalDate > DateTime.Now)
+        {
+            return BadRequest("Rental date cannot be in the future.");
+        }
+
+        if (model.RentalDuration <= 0)
+        {
+            return BadRequest("Rental duration must be a positive number.");
+        }
+
+        if (string.IsNullOrEmpty(model.Status) || (model.Status != "Active" && model.Status != "Returned"))
+        {
+            return BadRequest("Status must be either 'Active' or 'Returned'.");
+        }
+
+        if (!_userRepository.GetAll().Select(u => u.UserId).Contains(model.UserId))
+        {
+            return BadRequest("User with this id is not found.");
+        }
+
+        if(!_discRepository.GetAll().Select(d => d.DiscId).Contains(model.DiscId))
+        {
+            return BadRequest("Disc with this id is not found.");
+        }
+        if(_rentalRepository.GetAll().Any(r => r.DiscId == model.DiscId))
+        {
+            return BadRequest("This Disc is not available.");
         }
 
         Rental newRental = new Rental()
@@ -47,15 +89,29 @@ public class RentalsController : ControllerBase
         return Ok(new { Message = "Rental created successfully.", Rental = newRental });
     }
 
-    /// <summary>
-    /// Get all rentals with optional filtering and pagination
-    /// </summary>
     [HttpGet]
+    [Authorize(Policy = "AdminOnly")]
     public IActionResult GetRentals(int page = 1, int size = 5, int? userId = null, int? discId = null, string? status = null)
     {
         if (page < 1 || size < 1)
         {
             return BadRequest("Page and size must be positive numbers.");
+        }
+
+        // Validate search parameters
+        if (userId.HasValue && userId <= 0)
+        {
+            return BadRequest("Invalid UserId.");
+        }
+
+        if (discId.HasValue && discId <= 0)
+        {
+            return BadRequest("Invalid DiscId.");
+        }
+
+        if (!string.IsNullOrEmpty(status) && status != "Active" && status != "Returned")
+        {
+            return BadRequest("Status must be either 'Active' or 'Returned'.");
         }
 
         var query = _rentalRepository.GetAll().AsQueryable();
@@ -101,6 +157,11 @@ public class RentalsController : ControllerBase
     [Authorize] // Ensure the user is authenticated
     public IActionResult GetMyRentals(int page = 1, int size = 5)
     {
+        if (page < 1 || size < 1)
+        {
+            return BadRequest("Page and size must be positive numbers.");
+        }
+
         // Get the UserId from the token
         var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
         if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
@@ -129,10 +190,36 @@ public class RentalsController : ControllerBase
     [Authorize(Policy = "AdminOnly")]
     public IActionResult UpdateRental(int id, [FromBody] UpdateRentalModel model)
     {
+        if (model == null)
+        {
+            return BadRequest("Rental data is required.");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
         var rental = _rentalRepository.FirstOrDefault(r => r.RentalId == id);
         if (rental == null)
         {
             return NotFound(new { Message = "Rental not found." });
+        }
+
+        // Validate input
+        if (model.ReturnDate.HasValue && model.ReturnDate.Value > DateTime.Now)
+        {
+            return BadRequest("Return date cannot be in the future.");
+        }
+
+        if (model.ReturnDate.HasValue && model.ReturnDate.Value > rental.RentalDate)
+        {
+            return BadRequest("Return date cannot be in the future.");
+        }
+
+        if (!string.IsNullOrEmpty(model.Status) && model.Status != "Active" && model.Status != "Returned")
+        {
+            return BadRequest("Status must be either 'Active' or 'Returned'.");
         }
 
         if (model.ReturnDate.HasValue) rental.ReturnDate = model.ReturnDate.Value;

@@ -23,6 +23,20 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginModel model)
     {
+        if (model == null)
+        {
+            return BadRequest("Login data is required.");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        if (String.IsNullOrEmpty(model.Email) || String.IsNullOrEmpty(model.Password)) 
+        {
+            return BadRequest("Email or Password can't be null or empty");
+        }
         // Find the user by email (username)
         var user = _userRepository.FirstOrDefault(u => u.Email == model.Email && u.Password == model.Password);
 

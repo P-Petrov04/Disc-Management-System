@@ -19,5 +19,7 @@ namespace API.ViewModel
         [MaxLength(20)]
         public string? Format { get; set; } // CD, Vinyl, Cassette
         public int DurationMinutes { get; set; }
+
+        public IFormFile? Photo { get; set; }
     }
 }

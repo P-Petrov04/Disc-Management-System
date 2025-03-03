@@ -17,5 +17,7 @@ namespace API.ViewModel
         public string? Format { get; set; }
 
         public int? DurationMinutes { get; set; }
+
+        public IFormFile? Photo { get; set; }
     }
 }
