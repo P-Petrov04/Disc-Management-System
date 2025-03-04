@@ -10,12 +10,33 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace API
 {
-    /*https://app.getpostman.com/join-team?invite_code=83cc885762ff0941b9517a127419aa52a658153eea2aae410e61d3df45c22ac0&target_code=c18be4d2606301a8fad63a1820dc7c69*/
+    /*https://app.getpostman.com/join-team?invite_code=83cc885762ff0941b9517a127419aa52a658153eea2aae410e61d3df45c22ac0&target_code=c18be4d2606301a8fad63a1820dc7c69
+     
+     react frontend
+    cd disc-management-spa
+    .code
+     
+     */
     public class Program
     {
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:5175") // Allow requests from Vite server
+                              .AllowAnyHeader()
+                              .AllowAnyMethod()
+                              .AllowCredentials();
+                    });
+            });
+
 
             // Add services to the container.
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -56,7 +77,6 @@ namespace API
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
             });
 
-
             var app = builder.Build();
 
 
@@ -66,14 +86,16 @@ namespace API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
             app.UseStaticFiles();
-
+            
             app.UseHttpsRedirection();
+           
+            
+            app.UseCors(MyAllowSpecificOrigins);
 
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
 
             app.MapControllers();
 
@@ -84,6 +106,9 @@ namespace API
                 dbContext.Database.Migrate(); // Apply pending migrations
             }
 
+
+
+           
             app.Run();
         }
     }
