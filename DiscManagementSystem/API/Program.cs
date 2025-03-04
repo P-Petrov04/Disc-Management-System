@@ -17,7 +17,7 @@ namespace API
     .code
 
     
-    to run go to   
+    to run first start the backend then go to   
     cd disc-management-spa
     npm run dev
      
