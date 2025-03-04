@@ -12,9 +12,14 @@ namespace API
 {
     /*https://app.getpostman.com/join-team?invite_code=83cc885762ff0941b9517a127419aa52a658153eea2aae410e61d3df45c22ac0&target_code=c18be4d2606301a8fad63a1820dc7c69
      
-     react frontend
+     react frontend open
     cd disc-management-spa
     .code
+
+    
+    to run go to   
+    cd disc-management-spa
+    npm run dev
      
      */
     public class Program
