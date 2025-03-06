@@ -5,9 +5,6 @@ namespace API.ViewModel
     public class CreateRentalModel
     {
         [Required]
-        public int UserId { get; set; }
-
-        [Required]
         public int DiscId { get; set; }
 
         [Required]

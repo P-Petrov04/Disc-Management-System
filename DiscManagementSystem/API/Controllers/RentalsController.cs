@@ -37,10 +37,7 @@ public class RentalsController : ControllerBase
         }
 
         // Validate input
-        if (model.UserId <= 0)
-        {
-            return BadRequest("Invalid UserId.");
-        }
+        var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
 
         if (model.DiscId <= 0)
         {
@@ -62,23 +59,18 @@ public class RentalsController : ControllerBase
             return BadRequest("Status must be either 'Active' or 'Returned'.");
         }
 
-        if (!_userRepository.GetAll().Select(u => u.UserId).Contains(model.UserId))
-        {
-            return BadRequest("User with this id is not found.");
-        }
-
         if(!_discRepository.GetAll().Select(d => d.DiscId).Contains(model.DiscId))
         {
             return BadRequest("Disc with this id is not found.");
         }
-        if(_rentalRepository.GetAll().Any(r => r.DiscId == model.DiscId))
+        if(_discRepository.FirstOrDefault(d => d.DiscId == model.DiscId).IsAvailable == false)
         {
             return BadRequest("This Disc is not available.");
         }
 
         Rental newRental = new Rental()
         {
-            UserId = model.UserId,
+            UserId = int.Parse(userIdClaim.Value),
             DiscId = model.DiscId,
             RentalDate = model.RentalDate,
             RentalDuration = model.RentalDuration,
@@ -213,7 +205,7 @@ public class RentalsController : ControllerBase
             return BadRequest("Return date cannot be in the future.");
         }
 
-        if (model.ReturnDate.HasValue && model.ReturnDate.Value > rental.RentalDate)
+        if (model.ReturnDate.HasValue && model.ReturnDate.Value < rental.RentalDate)
         {
             return BadRequest("Return date cannot be in the future.");
         }
