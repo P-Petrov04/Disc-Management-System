@@ -77,7 +77,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Policy = "AdminOnly")]
     public IActionResult GetUsers(int page = 1, int size = 10, string? email = null)
     {
         if (page < 1 || size < 1)

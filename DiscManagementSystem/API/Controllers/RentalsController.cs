@@ -23,6 +23,7 @@ public class RentalsController : ControllerBase
     }
 
     [HttpPost("create")]
+    [Authorize]
     public IActionResult CreateRental([FromBody] CreateRentalModel model)
     {
         if (model == null)
@@ -86,7 +87,7 @@ public class RentalsController : ControllerBase
         };
 
         _rentalRepository.Add(newRental);
-        return Ok(new { Message = "Rental created successfully.", Rental = newRental });
+        return Ok(new { Message = "Rental created successfully.", Rental = model });
     }
 
     [HttpGet]
