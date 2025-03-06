@@ -59,14 +59,17 @@ public class RentalsController : ControllerBase
             return BadRequest("Status must be either 'Active' or 'Returned'.");
         }
 
-        if(!_discRepository.GetAll().Select(d => d.DiscId).Contains(model.DiscId))
+        if (!_discRepository.GetAll().Select(d => d.DiscId).Contains(model.DiscId))
         {
             return BadRequest("Disc with this id is not found.");
         }
-        if(_discRepository.FirstOrDefault(d => d.DiscId == model.DiscId).IsAvailable == false)
+        
+        var currDisc = _discRepository.FirstOrDefault(d => d.DiscId == model.DiscId);
+        if (!currDisc.IsAvailable)
         {
             return BadRequest("This Disc is not available.");
         }
+
 
         Rental newRental = new Rental()
         {
@@ -78,6 +81,7 @@ public class RentalsController : ControllerBase
             IsRentalExceeded = false // Default value
         };
 
+        currDisc.IsAvailable = false;
         _rentalRepository.Add(newRental);
         return Ok(new { Message = "Rental created successfully.", Rental = model });
     }
@@ -219,8 +223,18 @@ public class RentalsController : ControllerBase
         if (!string.IsNullOrEmpty(model.Status)) rental.Status = model.Status;
         if (model.IsRentalExceeded.HasValue) rental.IsRentalExceeded = model.IsRentalExceeded.Value;
 
+        var currDisc = _discRepository.FirstOrDefault(d => d.DiscId == rental.DiscId);
+        if(model.Status == "Active")
+        {
+            currDisc.IsAvailable = false;
+        }
+        else if (model.Status == "Returned")
+        {
+            currDisc.IsAvailable = true;
+        }
+
         _rentalRepository.Update(rental);
-        return Ok(new { Message = "Rental updated successfully.", Rental = rental });
+        return Ok(new { Message = "Rental updated successfully.", Rental = model });
     }
 
     [HttpDelete("{id}")]
