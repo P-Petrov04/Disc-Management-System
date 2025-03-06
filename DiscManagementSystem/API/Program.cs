@@ -32,14 +32,12 @@ namespace API
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy(MyAllowSpecificOrigins,
-                    policy =>
-                    {
-                        policy.WithOrigins("http://localhost:5175") // Allow requests from Vite server
-                              .AllowAnyHeader()
-                              .AllowAnyMethod()
-                              .AllowCredentials();
-                    });
+                options.AddPolicy("AllowAll", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
             });
 
 
@@ -94,9 +92,9 @@ namespace API
             app.UseStaticFiles();
             
             app.UseHttpsRedirection();
-           
-            
-            app.UseCors(MyAllowSpecificOrigins);
+
+
+            app.UseCors("AllowAll");
 
 
             app.UseAuthentication();

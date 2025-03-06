@@ -1,8 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { setAuthData } from "../utils/auth";
 
-function Login() {
+function Login({ setAuth }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -17,10 +18,17 @@ function Login() {
                 headers: { "Content-Type": "application/json" }
             });
 
-            const token = response.data.token;
-            localStorage.setItem("token", token);
+            const { token } = response.data;
+
+            if (!token) {
+                console.error("Token is missing in the response!");
+                alert("Login failed. Please try again.");
+                return;
+            }
+
+            setAuthData(token, setAuth); // Update auth state
             alert("Login successful!");
-            navigate("/");
+            navigate("/all-discs"); // Navigate to All Discs
         } catch (error) {
             console.error("Login failed:", error);
             alert("Invalid email or password.");
@@ -33,23 +41,11 @@ function Login() {
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label>Email</label>
-                    <input
-                        type="email"
-                        className="form-control"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
+                    <input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 </div>
                 <div className="mb-3">
                     <label>Password</label>
-                    <input
-                        type="password"
-                        className="form-control"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
+                    <input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
                 <button type="submit" className="btn btn-primary">Login</button>
             </form>

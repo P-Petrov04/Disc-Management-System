@@ -1,33 +1,38 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Home from "./pages/Home";
-import CreateDisc from "./pages/CreateDisc";
-import NotFound from "./pages/NotFound";
-import Navbar from "./components/Navbar";
+import { useEffect, useState } from "react";
+import AllDiscs from "./pages/AllDiscs";
 import Login from "./pages/Login";
 import AdminUsers from "./pages/AdminUsers";
 import AdminRentals from "./pages/AdminRentals";
-import CreateUser from "./pages/CreateUser"; // ✅ Import CreateUser
-
-import { getUserRole } from "./utils/auth";
-import "bootstrap/dist/css/bootstrap.min.css";
+import UserRentals from "./pages/UserRentals";
+import NotFound from "./pages/NotFound";
+import Navbar from "./components/Navbar";
+import { isAuthenticated } from "./utils/auth";
 
 function App() {
-  const role = getUserRole();
+  const [auth, setAuth] = useState(isAuthenticated());
+
+  // Listen for authentication changes
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setAuth(isAuthenticated());
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
   return (
     <Router>
-      <Navbar />
+      <Navbar auth={auth} setAuth={setAuth} />
       <div className="container mt-4">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-
-          {/* Protect routes based on Admin role */}
-          <Route path="/create" element={role === "Admin" ? <CreateDisc /> : <Navigate to="/" />} />
-          <Route path="/admin/users" element={role === "Admin" ? <AdminUsers /> : <Navigate to="/" />} />
-          <Route path="/admin/rentals" element={role === "Admin" ? <AdminRentals /> : <Navigate to="/" />} />
-          <Route path="/admin/create-user" element={role === "Admin" ? <CreateUser /> : <Navigate to="/" />} />
-
+          <Route path="/login" element={<Login setAuth={setAuth} />} />
+          <Route path="/" element={auth ? <AllDiscs /> : <Navigate replace to="/login" />} />
+          <Route path="/all-discs" element={auth ? <AllDiscs /> : <Navigate replace to="/login" />} />
+          <Route path="/my-rentals" element={auth ? <UserRentals /> : <Navigate replace to="/login" />} />
+          <Route path="/admin/users" element={auth ? <AdminUsers /> : <Navigate replace to="/login" />} />
+          <Route path="/admin/rentals" element={auth ? <AdminRentals /> : <Navigate replace to="/login" />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

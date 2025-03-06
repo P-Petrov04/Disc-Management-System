@@ -1,48 +1,50 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Container, Typography, Card, CardContent, List, ListItem, ListItemText, Chip } from "@mui/material";
 
 function AdminRentals() {
     const [rentals, setRentals] = useState([]);
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
+
+    const fetchRentals = async () => {
+        try {
+            const response = await axios.get("https://localhost:7254/api/rentals", {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setRentals(response.data.data);
+        } catch (error) {
+            console.error("Error fetching rentals:", error);
+        }
+    };
 
     useEffect(() => {
-        axios.get("https://localhost:7254/api/rentals", {
-            headers: { Authorization: `Bearer ${token}` }
-        })
-            .then(response => {
-                setRentals(response.data.data);
-            })
-            .catch(error => {
-                console.error("Error fetching rentals:", error);
-            });
+        fetchRentals(); // Initial fetch
+
+        const interval = setInterval(fetchRentals, 3000); // Fetch every 3 seconds
+        return () => clearInterval(interval); // Cleanup
     }, []);
 
     return (
-        <Container maxWidth="md" sx={{ mt: 4 }}>
-            <Typography variant="h4" gutterBottom>
-                All Rentals
-            </Typography>
-            <Card variant="outlined">
-                <CardContent>
-                    <List>
-                        {rentals.map(rental => (
-                            <ListItem key={rental.rentalId} divider>
-                                <ListItemText
-                                    primary={`User ${rental.userId} rented Disc ${rental.discId}`}
-                                    secondary={`Status: ${rental.status}`}
-                                />
-                                <Chip
-                                    label={rental.status}
-                                    color={rental.status === "Active" ? "success" : "default"}
-                                    variant="outlined"
-                                />
-                            </ListItem>
-                        ))}
-                    </List>
-                </CardContent>
-            </Card>
-        </Container>
+        <div>
+            <h2>All Rentals</h2>
+            <table className="table table-striped">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Disc ID</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {rentals.map(rental => (
+                        <tr key={rental.rentalId}>
+                            <td>{rental.userId}</td>
+                            <td>{rental.discId}</td>
+                            <td>{rental.status}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     );
 }
 

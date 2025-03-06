@@ -5,9 +5,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     open: "/",
+    historyApiFallback: true,
     proxy: {
       "/api": {
-        target: "https://localhost:7254/login",
+        target: "https://localhost:7254/",
         changeOrigin: true,
         secure: false
       }
