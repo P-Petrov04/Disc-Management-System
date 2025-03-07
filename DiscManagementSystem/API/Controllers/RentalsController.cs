@@ -88,11 +88,14 @@ public class RentalsController : ControllerBase
 
     [HttpGet]
     [Authorize(Policy = "AdminOnly")]
-    public IActionResult GetRentals(int page = 1, int size = 5, int? userId = null, int? discId = null, string? status = null)
+    public IActionResult GetRentals(int? pageP = null, int? sizeP = null, int? userId = null, int? discId = null, string? status = null)
     {
-        if (page < 1 || size < 1)
+        if (pageP.HasValue && sizeP.HasValue)
         {
-            return BadRequest("Page and size must be positive numbers.");
+            if (pageP < 1 || sizeP < 1)
+            {
+                return BadRequest("Page and size must be positive numbers.");
+            }
         }
 
         // Validate search parameters
@@ -139,13 +142,21 @@ public class RentalsController : ControllerBase
             return NotFound(new { Message = "No rentals found matching your search criteria." });
         }
 
-        var rentals = query.Skip((page - 1) * size).Take(size).ToList();
+        List<Rental> rentals;
+        if(pageP.HasValue && sizeP.HasValue)
+        {
+            rentals = query.Skip((pageP.Value - 1) * sizeP.Value).Take(sizeP.Value).ToList();
+        }
+        else
+        {
+            rentals = query.ToList();
+        }
 
         return Ok(new
         {
             TotalRentals = totalRentals,
-            Page = page,
-            PageSize = size,
+            Page = pageP ?? 1,
+            PageSize = sizeP ?? totalRentals,
             Data = rentals
         });
     }

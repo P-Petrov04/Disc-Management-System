@@ -113,11 +113,15 @@ public class DiscsController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetDiscs(int page = 1, int size = 5, string? title = null, string? artist = null)
+    public IActionResult GetDiscs(int? pageP = null, int? sizeP = null, string? title = null, string? artist = null)
     {
-        if (page < 1 || size < 1)
+        // Validate pagination parameters
+        if (pageP.HasValue && sizeP.HasValue)
         {
-            return BadRequest("Page and size must be positive numbers.");
+            if (pageP < 1 || sizeP < 1)
+            {
+                return BadRequest("Page and size must be positive numbers.");
+            }
         }
 
         // Validate search parameters
@@ -153,13 +157,22 @@ public class DiscsController : ControllerBase
             return NotFound(new { Message = "No discs found matching your search criteria." });
         }
 
-        var discs = query.Skip((page - 1) * size).Take(size).ToList();
+        // Apply pagination if parameters are provided
+        List<Disc> discs;
+        if (pageP.HasValue && sizeP.HasValue)
+        {
+            discs = query.Skip((pageP.Value - 1) * sizeP.Value).Take(sizeP.Value).ToList();
+        }
+        else
+        {
+            discs = query.ToList();
+        }
 
         return Ok(new
         {
             TotalDiscs = totalDiscs,
-            Page = page,
-            PageSize = size,
+            Page = pageP ?? 1,
+            PageSize = sizeP ?? totalDiscs,
             Data = discs
         });
     }

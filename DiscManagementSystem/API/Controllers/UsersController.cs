@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -78,11 +79,14 @@ public class UsersController : ControllerBase
 
     [HttpGet]
     [Authorize(Policy = "AdminOnly")]
-    public IActionResult GetUsers(int page = 1, int size = 10, string? email = null)
+    public IActionResult GetUsers(int? pageP = null, int? sizeP = null, string? email = null)
     {
-        if (page < 1 || size < 1)
+        if (pageP.HasValue && sizeP.HasValue)
         {
-            return BadRequest("Page and size must be positive numbers.");
+            if (pageP < 1 || sizeP < 1)
+            {
+                return BadRequest("Page and size must be positive numbers.");
+            }
         }
 
         // Validate search parameter
@@ -100,16 +104,32 @@ public class UsersController : ControllerBase
         }
 
         var totalUsers = query.Count();
-        var users = query
-            .Skip((page - 1) * size)
-            .Take(size)
+
+        // Return error if no users are found
+        if (totalUsers == 0)
+        {
+            return NotFound(new { Message = "No users found matching your search criteria." });
+        }
+
+        List<User> users;
+        if (pageP.HasValue && sizeP.HasValue) 
+        {
+            users = query
+            .Skip((pageP.Value - 1) * sizeP.Value)
+            .Take(sizeP.Value)
             .ToList();
+        }
+        else
+        {
+            users = query.ToList();
+        }
+        
 
         return Ok(new
         {
             TotalUsers = totalUsers,
-            Page = page,
-            Size = size,
+            Page = pageP ?? 1,
+            Size = sizeP ?? totalUsers,
             Users = users
         });
     }
