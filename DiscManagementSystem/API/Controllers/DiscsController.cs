@@ -95,7 +95,7 @@ public class DiscsController : ControllerBase
 
             // Store the file URL
             var baseUrl = $"{Request.Scheme}://{Request.Host}";
-            photoUrl = $"{baseUrl}/images/{uniqueFileName}";
+            photoUrl = $"/images/{uniqueFileName}";
         }
 
         Disc newDisc = new Disc()
@@ -113,8 +113,6 @@ public class DiscsController : ControllerBase
         return Ok(new { Message = "Disc created successfully.", Disc = newDisc });
     }
 
-    [HttpGet]
-    [HttpGet]
     [HttpGet]
     public IActionResult GetDiscs(int? pageP = null, int? sizeP = null, string? title = null, string? artist = null)
     {
@@ -160,8 +158,9 @@ public class DiscsController : ControllerBase
                     Format = d.Format,
                     IsAvailable = d.IsAvailable,
                     DurationMinutes = d.DurationMinutes,
+                    // ✅ Добавяме пълния URL към снимката:
                     PhotoUrl = d.PhotoUrl != null
-                        ? $"{Request.Scheme}://{Request.Host}{d.PhotoUrl}" // ✅ Fix URL here
+                        ? $"{Request.Scheme}://{Request.Host}{d.PhotoUrl}"
                         : null
                 })
                 .ToList();
@@ -178,8 +177,9 @@ public class DiscsController : ControllerBase
                     Format = d.Format,
                     IsAvailable = d.IsAvailable,
                     DurationMinutes = d.DurationMinutes,
+                    // ✅ Доставяме пълния URL към снимката:
                     PhotoUrl = d.PhotoUrl != null
-                        ? $"{Request.Scheme}://{Request.Host}{d.PhotoUrl}" // ✅ Fix URL here
+                        ? $"{Request.Scheme}://{Request.Host}{d.PhotoUrl}"
                         : null
                 })
                 .ToList();
@@ -193,6 +193,8 @@ public class DiscsController : ControllerBase
             Data = discs
         });
     }
+
+
 
 
     [HttpPut("{id}")]

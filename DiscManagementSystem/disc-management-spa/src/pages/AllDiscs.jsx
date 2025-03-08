@@ -13,7 +13,16 @@ function AllDiscs() {
             const response = await axios.get(`https://localhost:7254/api/discs?pageP=${page}&sizeP=${size}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
             });
-            setDiscs(response.data.data);
+
+            // ✅ Add cache-buster to force the browser to refresh the image
+            const discsWithCacheBuster = response.data.data.map(disc => ({
+                ...disc,
+                photoUrl: disc.photoUrl
+                    ? `${disc.photoUrl}?t=${new Date().getTime()}` // 🔥 Cache Buster ✅
+                    : null
+            }));
+
+            setDiscs(discsWithCacheBuster);
             setTotalPages(Math.ceil(response.data.totalDiscs / size));
         } catch (error) {
             console.error("Error fetching discs:", error);
@@ -22,6 +31,8 @@ function AllDiscs() {
 
     useEffect(() => {
         fetchDiscs(page);
+
+        // ✅ Keep refreshing every 3 seconds
         const interval = setInterval(() => fetchDiscs(page), 3000);
         return () => clearInterval(interval);
     }, [page]);
@@ -46,7 +57,7 @@ function AllDiscs() {
                         <tr key={disc.discId}>
                             <td>
                                 {disc.photoUrl
-                                    ? <img src={`${disc.photoUrl}`} alt={disc.title} width="50" />
+                                    ? <img src={disc.photoUrl} alt={disc.title} width="50" />
                                     : "No Image"}
                             </td>
                             <td>{disc.discId}</td>

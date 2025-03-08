@@ -162,7 +162,7 @@ public class RentalsController : ControllerBase
     }
 
     [HttpGet("my-rentals")]
-    [Authorize] // Ensure the user is authenticated
+    [Authorize]
     public IActionResult GetMyRentals(int page = 1, int size = 5)
     {
         if (page < 1 || size < 1)
@@ -170,20 +170,24 @@ public class RentalsController : ControllerBase
             return BadRequest("Page and size must be positive numbers.");
         }
 
-        // Get the UserId from the token
+        // ✅ Изтегляме UserId от токена
         var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
         if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
         {
             return Unauthorized(new { Message = "Invalid user token." });
         }
 
-        // Filter rentals by the logged-in user's UserId
-        var query = _rentalRepository.GetAll().Where(r => r.UserId == userId);
+        // ✅ Взимаме рентали според UserId (включително за админи)
+        var query = _rentalRepository.GetAll()
+            .Where(r => r.UserId == userId);
 
         var totalRentals = query.Count();
 
-        // Paginate the results
-        var rentals = query.Skip((page - 1) * size).Take(size).ToList();
+        // ✅ Пагиниране
+        var rentals = query
+            .Skip((page - 1) * size)
+            .Take(size)
+            .ToList();
 
         return Ok(new
         {
@@ -193,6 +197,7 @@ public class RentalsController : ControllerBase
             Data = rentals
         });
     }
+
 
     [HttpPut("{id}")]
     [Authorize(Policy = "AdminOnly")]
