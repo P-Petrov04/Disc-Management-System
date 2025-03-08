@@ -14,11 +14,10 @@ function AllDiscs() {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
             });
 
-            // ✅ Add cache-buster to force the browser to refresh the image
             const discsWithCacheBuster = response.data.data.map(disc => ({
                 ...disc,
                 photoUrl: disc.photoUrl
-                    ? `${disc.photoUrl}?t=${new Date().getTime()}` // 🔥 Cache Buster ✅
+                    ? `${disc.photoUrl}?t=${new Date().getTime()}`
                     : null
             }));
 
@@ -32,7 +31,6 @@ function AllDiscs() {
     useEffect(() => {
         fetchDiscs(page);
 
-        // ✅ Keep refreshing every 3 seconds
         const interval = setInterval(() => fetchDiscs(page), 3000);
         return () => clearInterval(interval);
     }, [page]);

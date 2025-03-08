@@ -5,12 +5,11 @@ import { getUserId } from "../utils/auth";
 function AdminMyRentals() {
     const [rentals, setRentals] = useState([]);
     const [discsMap, setDiscsMap] = useState({});
-    const [page, setPage] = useState(1); // ✅ Следим текущата страница
-    const [totalPages, setTotalPages] = useState(1); // ✅ Следим общия брой страници
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const userId = getUserId();
     const token = localStorage.getItem("token");
 
-    // ✅ Взимаме дисковете и ги пазим в map
     const fetchDiscs = async () => {
         try {
             const discsResponse = await axios.get(`https://localhost:7254/api/discs`, {
@@ -28,7 +27,6 @@ function AdminMyRentals() {
         }
     };
 
-    // ✅ Взимаме само ренталите на логнатия админ с пагинация
     const fetchRentals = async (page = 1, size = 5) => {
         if (!userId || !token) return;
 
@@ -45,7 +43,7 @@ function AdminMyRentals() {
             }));
 
             setRentals(rentalsWithDetails);
-            setTotalPages(Math.ceil(rentalsResponse.data.totalRentals / size)); // ✅ Обновяваме totalPages
+            setTotalPages(Math.ceil(rentalsResponse.data.totalRentals / size));
         } catch (error) {
             console.error("Error fetching admin rentals:", error);
         }
@@ -54,7 +52,6 @@ function AdminMyRentals() {
     useEffect(() => {
         fetchRentals(page);
 
-        // ✅ Keep refreshing every 3 sec
         const interval = setInterval(() => fetchRentals(page), 3000);
         return () => clearInterval(interval);
     }, [page, userId, token]);
@@ -87,7 +84,7 @@ function AdminMyRentals() {
                 </tbody>
             </table>
 
-            {/* ✅ Пагинация */}
+            {}
             <div>
                 <button
                     onClick={() => setPage(p => Math.max(1, p - 1))}

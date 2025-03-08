@@ -36,7 +36,6 @@ public class RentalsController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        // Validate input
         var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
 
         if (model.DiscId <= 0)
@@ -78,7 +77,7 @@ public class RentalsController : ControllerBase
             RentalDate = model.RentalDate,
             RentalDuration = model.RentalDuration,
             Status = model.Status,
-            IsRentalExceeded = false // Default value
+            IsRentalExceeded = false
         };
 
         currDisc.IsAvailable = false;
@@ -98,7 +97,6 @@ public class RentalsController : ControllerBase
             }
         }
 
-        // Validate search parameters
         if (userId.HasValue && userId <= 0)
         {
             return BadRequest("Invalid UserId.");
@@ -116,19 +114,16 @@ public class RentalsController : ControllerBase
 
         var query = _rentalRepository.GetAll().AsQueryable();
 
-        // Filter by UserId
         if (userId.HasValue)
         {
             query = query.Where(r => r.UserId == userId);
         }
 
-        // Filter by DiscId
         if (discId.HasValue)
         {
             query = query.Where(r => r.DiscId == discId);
         }
 
-        // Filter by Status
         if (!string.IsNullOrEmpty(status))
         {
             query = query.Where(r => r.Status != null && r.Status.ToLower() == status.ToLower());
@@ -136,7 +131,6 @@ public class RentalsController : ControllerBase
 
         var totalRentals = query.Count();
 
-        // Return error if no rentals are found
         if (totalRentals == 0)
         {
             return NotFound(new { Message = "No rentals found matching your search criteria." });
@@ -170,20 +164,17 @@ public class RentalsController : ControllerBase
             return BadRequest("Page and size must be positive numbers.");
         }
 
-        // ✅ Изтегляме UserId от токена
         var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
         if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
         {
             return Unauthorized(new { Message = "Invalid user token." });
         }
 
-        // ✅ Взимаме рентали според UserId (включително за админи)
         var query = _rentalRepository.GetAll()
             .Where(r => r.UserId == userId);
 
         var totalRentals = query.Count();
 
-        // ✅ Пагиниране
         var rentals = query
             .Skip((page - 1) * size)
             .Take(size)
@@ -219,7 +210,6 @@ public class RentalsController : ControllerBase
             return NotFound(new { Message = "Rental not found." });
         }
 
-        // Validate input
         if (model.ReturnDate.HasValue && model.ReturnDate.Value > DateTime.Now)
         {
             return BadRequest("Return date cannot be in the future.");

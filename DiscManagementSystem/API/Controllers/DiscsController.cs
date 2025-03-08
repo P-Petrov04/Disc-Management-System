@@ -62,13 +62,11 @@ public class DiscsController : ControllerBase
         string photoUrl = null;
         if (model.Photo != null && model.Photo.Length > 0)
         {
-            // Validate file size (e.g., 5MB limit)
-            if (model.Photo.Length > 5 * 1024 * 1024) // 5MB in bytes
+            if (model.Photo.Length > 5 * 1024 * 1024)
             {
                 return BadRequest("File size must be less than 5MB.");
             }
 
-            // Validate file type (e.g., only allow images)
             var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
             var fileExtension = Path.GetExtension(model.Photo.FileName).ToLower();
             if (!allowedExtensions.Contains(fileExtension))
@@ -76,24 +74,20 @@ public class DiscsController : ControllerBase
                 return BadRequest("Only JPG, JPEG, PNG, and GIF files are allowed.");
             }
 
-            // Save the file to a folder (e.g., wwwroot/images)
             var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
             if (!Directory.Exists(uploadsFolder))
             {
                 Directory.CreateDirectory(uploadsFolder);
             }
 
-            // Generate a unique file name to avoid conflicts
             var uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Photo.FileName;
             var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-            // Save the file to the server
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await model.Photo.CopyToAsync(stream);
             }
 
-            // Store the file URL
             var baseUrl = $"{Request.Scheme}://{Request.Host}";
             photoUrl = $"/images/{uniqueFileName}";
         }
@@ -105,7 +99,7 @@ public class DiscsController : ControllerBase
             ReleaseDate = model.ReleaseDate,
             Format = model.Format,
             DurationMinutes = model.DurationMinutes,
-            IsAvailable = true, // Default value
+            IsAvailable = true,
             PhotoUrl = photoUrl
         };
 
@@ -158,7 +152,6 @@ public class DiscsController : ControllerBase
                     Format = d.Format,
                     IsAvailable = d.IsAvailable,
                     DurationMinutes = d.DurationMinutes,
-                    // ✅ Добавяме пълния URL към снимката:
                     PhotoUrl = d.PhotoUrl != null
                         ? $"{Request.Scheme}://{Request.Host}{d.PhotoUrl}"
                         : null
@@ -177,7 +170,6 @@ public class DiscsController : ControllerBase
                     Format = d.Format,
                     IsAvailable = d.IsAvailable,
                     DurationMinutes = d.DurationMinutes,
-                    // ✅ Доставяме пълния URL към снимката:
                     PhotoUrl = d.PhotoUrl != null
                         ? $"{Request.Scheme}://{Request.Host}{d.PhotoUrl}"
                         : null
@@ -193,9 +185,6 @@ public class DiscsController : ControllerBase
             Data = discs
         });
     }
-
-
-
 
     [HttpPut("{id}")]
     [Authorize(Policy = "AdminOnly")]
@@ -240,13 +229,11 @@ public class DiscsController : ControllerBase
 
         if (model.Photo != null && model.Photo.Length > 0)
         {
-            // Validate file size (e.g., 5MB limit)
-            if (model.Photo.Length > 5 * 1024 * 1024) // 5MB in bytes
+            if (model.Photo.Length > 5 * 1024 * 1024)
             {
                 return BadRequest("File size must be less than 5MB.");
             }
 
-            // Validate file type (e.g., only allow images)
             var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
             var fileExtension = Path.GetExtension(model.Photo.FileName).ToLower();
             if (!allowedExtensions.Contains(fileExtension))
@@ -254,24 +241,20 @@ public class DiscsController : ControllerBase
                 return BadRequest("Only JPG, JPEG, PNG, and GIF files are allowed.");
             }
 
-            // Save the file to a folder (e.g., wwwroot/images)
             var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
             if (!Directory.Exists(uploadsFolder))
             {
                 Directory.CreateDirectory(uploadsFolder);
             }
 
-            // Generate a unique file name to avoid conflicts
             var uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Photo.FileName;
             var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-            // Save the file to the server
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await model.Photo.CopyToAsync(stream);
             }
 
-            // Store the file URL
             disc.PhotoUrl = $"/images/{uniqueFileName}";
         }
 

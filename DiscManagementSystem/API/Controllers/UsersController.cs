@@ -34,7 +34,6 @@ public class UsersController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        // Validate input
         if (string.IsNullOrEmpty(model.FirstName))
         {
             return BadRequest("First name is required.");
@@ -55,7 +54,6 @@ public class UsersController : ControllerBase
             return BadRequest("Password is required.");
         }
 
-        // Check if the email is already registered
         var existingUser = _userRepository.GetAll().FirstOrDefault(u => u.Email == model.Email);
         if (existingUser != null)
         {
@@ -89,7 +87,6 @@ public class UsersController : ControllerBase
             }
         }
 
-        // Validate search parameter
         if (!string.IsNullOrEmpty(email) && email.Length > 100)
         {
             return BadRequest("Email search parameter is too long.");
@@ -97,7 +94,6 @@ public class UsersController : ControllerBase
 
         var query = _userRepository.GetAll().AsQueryable();
 
-        // Search by email
         if (!string.IsNullOrEmpty(email))
         {
             query = query.Where(u => u.Email != null && u.Email.ToLower().Contains(email.ToLower()));
@@ -105,7 +101,6 @@ public class UsersController : ControllerBase
 
         var totalUsers = query.Count();
 
-        // Return error if no users are found
         if (totalUsers == 0)
         {
             return NotFound(new { Message = "No users found matching your search criteria." });
@@ -154,7 +149,6 @@ public class UsersController : ControllerBase
             return NotFound(new { Message = "User not found." });
         }
 
-        // Validate input
         if (!string.IsNullOrEmpty(model.FirstName) && model.FirstName.Length <= 100) user.FirstName = model.FirstName;
         if (!string.IsNullOrEmpty(model.LastName) && model.LastName.Length <= 100) user.LastName = model.LastName;
 

@@ -2,9 +2,9 @@
 	"info": {
 		"_postman_id": "a979e8ca-3f39-4b6a-bde7-8f20218dcf28",
 		"name": "DiskManagment",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "33457518",
-		"_collection_link": "https://fmistu.postman.co/workspace/Disc-Management-API~4d379bb6-045e-4e04-a8fb-54a716e12aca/collection/33457518-a979e8ca-3f39-4b6a-bde7-8f20218dcf28?action=share&source=collection_link&creator=33457518"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "38740224",
+		"_collection_link": "https://fmistu.postman.co/workspace/Disc-Management-API~4d379bb6-045e-4e04-a8fb-54a716e12aca/collection/33457518-a979e8ca-3f39-4b6a-bde7-8f20218dcf28?action=share&source=collection_link&creator=38740224"
 	},
 	"item": [
 		{
@@ -24,19 +24,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "https://localhost:7254/api/auth/login",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "7254",
-							"path": [
-								"api",
-								"auth",
-								"login"
-							]
-						}
+						"url": "https://localhost:7254/api/auth/login"
 					},
 					"response": []
 				},
@@ -47,26 +35,14 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"userp12@gmail.com\",\r\n  \"password\": \"12345678910\"\r\n}",
+							"raw": "{\r\n  \"email\": \"test@example.com\",\r\n  \"password\": \"123456789\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": {
-							"raw": "https://localhost:7254/api/auth/login",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "7254",
-							"path": [
-								"api",
-								"auth",
-								"login"
-							]
-						}
+						"url": "https://localhost:7254/api/auth/login"
 					},
 					"response": []
 				}
@@ -239,18 +215,7 @@
 										"type": "text"
 									}
 								],
-								"url": {
-									"raw": "https://localhost:7254/api/users",
-									"protocol": "https",
-									"host": [
-										"localhost"
-									],
-									"port": "7254",
-									"path": [
-										"api",
-										"users"
-									]
-								}
+								"url": "https://localhost:7254/api/users"
 							},
 							"response": []
 						}
@@ -287,32 +252,20 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEyOTcxNzcsImV4cCI6MTc0MTkwMTk3NywiaWF0IjoxNzQxMjk3MTc3fQ.y_wrPqFtGO_OZtwAA0KeffL7K23Bs8fhlY9DFc5ipjk",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDE0NTkwNjIsImV4cCI6MTc0MjA2Mzg2MiwiaWF0IjoxNzQxNDU5MDYyfQ.W0k1wsnD5jG_2nH1wlTq-En47VN590pVcjp6viHZYew",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"firstName\": \"Userp\",\r\n    \"lastName\": \"zatest\",\r\n    \"email\": \"userp12@gmail.com\",\r\n    \"password\": \"12345678910\",\r\n    \"phoneNumber\": \"0899675669\"\r\n}",
+									"raw": "{\r\n    \"firstName\": \"Gosho\",\r\n    \"lastName\": \"Minkov\",\r\n    \"email\": \"gosho69@gmail.com\",\r\n    \"password\": \"123456789\",\r\n    \"phoneNumber\": \"0899675669\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
 										}
 									}
 								},
-								"url": {
-									"raw": "https://localhost:7254/api/users/create",
-									"protocol": "https",
-									"host": [
-										"localhost"
-									],
-									"port": "7254",
-									"path": [
-										"api",
-										"users",
-										"create"
-									]
-								}
+								"url": "https://localhost:7254/api/users/create"
 							},
 							"response": []
 						},
@@ -344,32 +297,20 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluQGVtYWlsLmNvbSIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTc0MDY2Nzg5OCwiZXhwIjoxNzQxMjcyNjk4LCJpYXQiOjE3NDA2Njc4OTh9.iR_Nn0kopvjR3pkuiI7ekqT1TwpUCsi8VlA9MGcNl0s",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDE0NTkwNjIsImV4cCI6MTc0MjA2Mzg2MiwiaWF0IjoxNzQxNDU5MDYyfQ.W0k1wsnD5jG_2nH1wlTq-En47VN590pVcjp6viHZYew",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"firstName\": \"test2\",\r\n    \"lastName\": \"user2\",\r\n    \"email\": \"testexample@gmail.com\",\r\n    \"password\": \"11111\",\r\n    \"phoneNumber\": \"00000\"\r\n}",
+									"raw": "{\r\n    \"firstName\": \"Minko\",\r\n    \"lastName\": \"Goshov\",\r\n    \"email\": \"minkovGosho@gmail.com\",\r\n    \"password\": \"11111\",\r\n    \"phoneNumber\": \"00000\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
 										}
 									}
 								},
-								"url": {
-									"raw": "https://localhost:7254/api/users/5",
-									"protocol": "https",
-									"host": [
-										"localhost"
-									],
-									"port": "7254",
-									"path": [
-										"api",
-										"users",
-										"5"
-									]
-								}
+								"url": "https://localhost:7254/api/users/13"
 							},
 							"response": []
 						},
@@ -395,7 +336,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEyOTcxNzcsImV4cCI6MTc0MTkwMTk3NywiaWF0IjoxNzQxMjk3MTc3fQ.y_wrPqFtGO_OZtwAA0KeffL7K23Bs8fhlY9DFc5ipjk",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDE0NTkwNjIsImV4cCI6MTc0MjA2Mzg2MiwiaWF0IjoxNzQxNDU5MDYyfQ.W0k1wsnD5jG_2nH1wlTq-En47VN590pVcjp6viHZYew",
 										"type": "text"
 									}
 								],
@@ -408,19 +349,7 @@
 										}
 									}
 								},
-								"url": {
-									"raw": "https://localhost:7254/api/users/12",
-									"protocol": "https",
-									"host": [
-										"localhost"
-									],
-									"port": "7254",
-									"path": [
-										"api",
-										"users",
-										"12"
-									]
-								}
+								"url": "https://localhost:7254/api/users/13"
 							},
 							"response": []
 						}
@@ -692,7 +621,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEyODc4NDEsImV4cCI6MTc0MTg5MjY0MSwiaWF0IjoxNzQxMjg3ODQxfQ.QmV8mZd8dApJnIMxNdYw2_FNSnjXVKrhwEEgkktxClI",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDE0NjQ3MTYsImV4cCI6MTc0MjA2OTUxNiwiaWF0IjoxNzQxNDY0NzE2fQ.7R1JpT2PsSsqaClPbYZf32R2kJadvXaEvn9XC3A5LFc",
 										"type": "text"
 									}
 								],
@@ -701,49 +630,37 @@
 									"formdata": [
 										{
 											"key": "Title",
-											"value": "Album 8",
+											"value": "Album Toni",
 											"type": "text"
 										},
 										{
 											"key": "Artist",
-											"value": "Artist 8",
+											"value": "Toni Storaro",
 											"type": "text"
 										},
 										{
 											"key": "ReleaseDate",
-											"value": "2024-02-02T00:00:00",
+											"value": "2024-03-08T00:00:00",
 											"type": "text"
 										},
 										{
 											"key": "Format",
-											"value": "DVD",
+											"value": "CD",
 											"type": "text"
 										},
 										{
 											"key": "DurationMinutes",
-											"value": "55",
+											"value": "120",
 											"type": "text"
 										},
 										{
 											"key": "Photo",
 											"type": "file",
-											"src": "postman-cloud:///1effc46f-00f4-4ea0-8ea0-148c8976729a"
+											"src": "postman-cloud:///1effc588-52bb-4350-b593-2380487a0fec"
 										}
 									]
 								},
-								"url": {
-									"raw": "https://localhost:7254/api/discs/create",
-									"protocol": "https",
-									"host": [
-										"localhost"
-									],
-									"port": "7254",
-									"path": [
-										"api",
-										"discs",
-										"create"
-									]
-								}
+								"url": "https://localhost:7254/api/discs/create"
 							},
 							"response": []
 						},
@@ -779,7 +696,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEwMjcyOTIsImV4cCI6MTc0MTYzMjA5MiwiaWF0IjoxNzQxMDI3MjkyfQ._-nUg72AJfhfdkfY86VYj2I9DU5TQC4vIWknygo9s9s",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDE0NjU5MDMsImV4cCI6MTc0MjA3MDcwMywiaWF0IjoxNzQxNDY1OTAzfQ.1k5DfytjbWg3HajjeoXR-EDaDVyCwr9llwQNU0aV6jw",
 										"type": "text"
 									}
 								],
@@ -787,50 +704,38 @@
 									"mode": "formdata",
 									"formdata": [
 										{
-											"key": "Title ",
-											"value": "Updated Album Title",
+											"key": "Title",
+											"value": "Album Updated 2",
 											"type": "text"
 										},
 										{
 											"key": "Artist",
-											"value": "Updated Artist",
+											"value": "Artist Updated 2",
 											"type": "text"
 										},
 										{
-											"key": "ReleaseDate ",
-											"value": "2024-03-03",
+											"key": "ReleaseDate",
+											"value": "2022-03-03",
 											"type": "text"
 										},
 										{
 											"key": "Format",
-											"value": "Vinyl",
+											"value": "CD",
 											"type": "text"
 										},
 										{
 											"key": "DurationMinutes",
-											"value": "50",
+											"value": "55",
 											"type": "text"
 										},
 										{
-											"key": "photoUrl",
+											"key": "Photo",
 											"type": "file",
-											"src": "/E:/pu 2 year/KG/imgs/copy.png"
+											"src": "/C:/My files/Уни/Уни - Програмиране/Компютърна графика/Photos/delete.png"
 										}
 									]
 								},
-								"url": {
-									"raw": "https://localhost:7254/api/discs/11",
-									"protocol": "https",
-									"host": [
-										"localhost"
-									],
-									"port": "7254",
-									"path": [
-										"api",
-										"discs",
-										"11"
-									]
-								}
+								"url": "https://localhost:7254/api/discs/10"
 							},
 							"response": []
 						},
@@ -856,7 +761,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEyODU4MTQsImV4cCI6MTc0MTg5MDYxNCwiaWF0IjoxNzQxMjg1ODE0fQ.nEByLmbLZQB8BtNClBKlUI3sLdRzxllSoU-5mMhtrOA",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDE0NTkwNjIsImV4cCI6MTc0MjA2Mzg2MiwiaWF0IjoxNzQxNDU5MDYyfQ.W0k1wsnD5jG_2nH1wlTq-En47VN590pVcjp6viHZYew",
 										"type": "text"
 									}
 								],
@@ -869,19 +774,7 @@
 										}
 									}
 								},
-								"url": {
-									"raw": "https://localhost:7254/api/discs/17",
-									"protocol": "https",
-									"host": [
-										"localhost"
-									],
-									"port": "7254",
-									"path": [
-										"api",
-										"discs",
-										"17"
-									]
-								}
+								"url": "https://localhost:7254/api/discs/19"
 							},
 							"response": []
 						}
@@ -918,18 +811,7 @@
 										}
 									}
 								},
-								"url": {
-									"raw": "https://localhost:7254/api/rentals",
-									"protocol": "https",
-									"host": [
-										"localhost"
-									],
-									"port": "7254",
-									"path": [
-										"api",
-										"rentals"
-									]
-								}
+								"url": "https://localhost:7254/api/rentals"
 							},
 							"response": []
 						},
@@ -1162,32 +1044,20 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxMiIsInVuaXF1ZV9uYW1lIjoidXNlcnAxMkBnbWFpbC5jb20iLCJyb2xlIjoiVXNlciIsIm5iZiI6MTc0MTQ1NTU1NywiZXhwIjoxNzQyMDYwMzU3LCJpYXQiOjE3NDE0NTU1NTd9.KGJssZWbfIQRaqcCE9Vmlz2mxHfFPYmKnlFvngb0kxk",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDE0NjA3ODcsImV4cCI6MTc0MjA2NTU4NywiaWF0IjoxNzQxNDYwNzg3fQ.yCRXWYqgBqD2r-eb7vNrx3VMsgC7PvqB3sa_5TZRW-0",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"discId\": 17,\r\n    \"rentalDate\": \"2023-10-01T00:00:00\",\r\n    \"rentalDuration\": 10,\r\n    \"status\": \"Active\"\r\n}",
+									"raw": "{\r\n    \"discId\": 18,\r\n    \"rentalDate\": \"2024-10-01T00:00:00\",\r\n    \"rentalDuration\": 10,\r\n    \"status\": \"Active\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
 										}
 									}
 								},
-								"url": {
-									"raw": "https://localhost:7254/api/rentals/create",
-									"protocol": "https",
-									"host": [
-										"localhost"
-									],
-									"port": "7254",
-									"path": [
-										"api",
-										"rentals",
-										"create"
-									]
-								}
+								"url": "https://localhost:7254/api/rentals/create"
 							},
 							"response": []
 						},
@@ -1204,26 +1074,14 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"returnDate\": \"2023-11-09T00:00:00\",\r\n    \"status\": \"Returned\",\r\n    \"isRentalExceeded\": false\r\n}",
+									"raw": "{\r\n    \"returnDate\": \"2024-11-09T00:00:00\",\r\n    \"status\": \"Returned\",\r\n    \"isRentalExceeded\": true\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
 										}
 									}
 								},
-								"url": {
-									"raw": "https://localhost:7254/api/rentals/27",
-									"protocol": "https",
-									"host": [
-										"localhost"
-									],
-									"port": "7254",
-									"path": [
-										"api",
-										"rentals",
-										"27"
-									]
-								}
+								"url": "https://localhost:7254/api/rentals/28"
 							},
 							"response": []
 						},
@@ -1237,7 +1095,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEzMDAyMzMsImV4cCI6MTc0MTkwNTAzMywiaWF0IjoxNzQxMzAwMjMzfQ.OtsQoi0pOC8xHwGKvHNpISqpLyF7ECysdQtld1BXh0Y",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDE0NTkwNjIsImV4cCI6MTc0MjA2Mzg2MiwiaWF0IjoxNzQxNDU5MDYyfQ.W0k1wsnD5jG_2nH1wlTq-En47VN590pVcjp6viHZYew",
 										"type": "text"
 									}
 								],
@@ -1250,19 +1108,7 @@
 										}
 									}
 								},
-								"url": {
-									"raw": "https://localhost:7254/api/rentals/27",
-									"protocol": "https",
-									"host": [
-										"localhost"
-									],
-									"port": "7254",
-									"path": [
-										"api",
-										"rentals",
-										"27"
-									]
-								}
+								"url": "https://localhost:7254/api/rentals/28"
 							},
 							"response": []
 						}

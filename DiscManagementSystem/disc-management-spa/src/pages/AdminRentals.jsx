@@ -9,7 +9,6 @@ function AdminRentals() {
     const [discsMap, setDiscsMap] = useState({});
     const token = localStorage.getItem("token");
 
-    // ✅ Fetch and update users and discs
     const fetchUsersAndDiscs = async () => {
         try {
             const [usersResponse, discsResponse] = await Promise.all([
@@ -38,10 +37,8 @@ function AdminRentals() {
         }
     };
 
-    // ✅ Fetch rentals only
     const fetchRentals = async (page = 1, size = 5) => {
         try {
-            // 🔥 Ensure users & discs are up-to-date before fetching rentals
             await fetchUsersAndDiscs();
 
             const response = await axios.get(`https://localhost:7254/api/rentals?pageP=${page}&sizeP=${size}`, {
@@ -64,7 +61,6 @@ function AdminRentals() {
     useEffect(() => {
         fetchRentals(page);
 
-        // ✅ Refresh every 3 seconds
         const interval = setInterval(() => fetchRentals(page), 3000);
         return () => clearInterval(interval);
     }, [page]);

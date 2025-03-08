@@ -27,7 +27,6 @@ function Login({ setAuth }) {
                 return;
             }
 
-            // ✅ Store user details and token in localStorage
             setAuthData(token, setAuth);
 
             alert("Login successful!");

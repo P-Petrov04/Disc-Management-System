@@ -12,13 +12,12 @@ import { isAuthenticated, logout } from "./utils/auth";
 function App() {
   const [auth, setAuth] = useState(isAuthenticated());
 
-  // Restore authentication state on page load
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      setAuth(true); // Restore auth state if token exists
+      setAuth(true);
     } else {
-      setAuth(false); // Ensure auth state is false if no token exists
+      setAuth(false);
     }
   }, []);
 

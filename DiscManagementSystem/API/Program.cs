@@ -42,8 +42,6 @@ namespace API
                 });
             });
 
-
-            // Add services to the container.
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -52,11 +50,8 @@ namespace API
             builder.Services.AddScoped<BaseRepository<Rental>>();
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
-
 
             //Configure JWT Authentication
             var secretKey = builder.Configuration["JwtSettings:SecretKey"]
@@ -113,7 +108,7 @@ namespace API
             {
                 var services = scope.ServiceProvider;
                 var dbContext = services.GetRequiredService<ApplicationDbContext>();
-                dbContext.Database.Migrate(); // Apply pending migrations
+                dbContext.Database.Migrate();
             }
 
 

@@ -37,7 +37,7 @@ namespace Common.Repositories
             modelBuilder.Entity<User>().HasData(
                     new User
                     {
-                        UserId = 1, // Ensure this ID is unique
+                        UserId = 1,
                         FirstName = "Admin",
                         LastName = "User",
                         Email = "admin@email.com",

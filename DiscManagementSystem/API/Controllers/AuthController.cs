@@ -42,7 +42,6 @@ public class AuthController : ControllerBase
 
         if (user != null)
         {
-            // For now, we'll assume the password is correct (you should hash passwords in production)
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_config["JwtSettings:SecretKey"]);
 
@@ -50,7 +49,7 @@ public class AuthController : ControllerBase
         {
             new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
             new Claim(ClaimTypes.Name, user.Email),
-            new Claim(ClaimTypes.Role, user.UserId == 1 ? "Admin" : "User") // Admin role for the seeded user
+            new Claim(ClaimTypes.Role, user.UserId == 1 ? "Admin" : "User")
         };
 
             var tokenDescriptor = new SecurityTokenDescriptor
