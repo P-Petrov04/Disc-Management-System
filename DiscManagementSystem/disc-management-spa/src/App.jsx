@@ -7,19 +7,19 @@ import AdminRentals from "./pages/AdminRentals";
 import UserRentals from "./pages/UserRentals";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
-import { isAuthenticated } from "./utils/auth";
+import { isAuthenticated, logout } from "./utils/auth";
 
 function App() {
   const [auth, setAuth] = useState(isAuthenticated());
 
-  // Listen for authentication changes
+  // Restore authentication state on page load
   useEffect(() => {
-    const handleStorageChange = () => {
-      setAuth(isAuthenticated());
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
+    const token = localStorage.getItem("token");
+    if (token) {
+      setAuth(true); // Restore auth state if token exists
+    } else {
+      setAuth(false); // Ensure auth state is false if no token exists
+    }
   }, []);
 
   return (

@@ -1,27 +1,33 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 function AdminUsers() {
     const [users, setUsers] = useState([]);
-    const token = sessionStorage.getItem("token");
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const token = localStorage.getItem("token");
 
-    const fetchUsers = async () => {
+    const fetchUsers = async (page = 1, size = 5) => {
         try {
-            const response = await axios.get("https://localhost:7254/api/users", {
+            const response = await axios.get(`https://localhost:7254/api/users?pageP=${page}&sizeP=${size}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            setUsers(response.data.users);
+
+            if (response.data && Array.isArray(response.data.users)) {
+                setUsers(response.data.users);
+                setTotalPages(Math.ceil(response.data.totalUsers / size));
+            }
         } catch (error) {
             console.error("Error fetching users:", error);
+            setUsers([]);
         }
     };
 
     useEffect(() => {
-        fetchUsers(); // Initial fetch
-
-        const interval = setInterval(fetchUsers, 3000); // Fetch every 3 seconds
-        return () => clearInterval(interval); // Cleanup
-    }, []);
+        fetchUsers(page);
+        const interval = setInterval(() => fetchUsers(page), 3000);
+        return () => clearInterval(interval);
+    }, [page]);
 
     return (
         <div>
@@ -29,6 +35,7 @@ function AdminUsers() {
             <table className="table table-striped">
                 <thead>
                     <tr>
+                        <th>User ID</th>
                         <th>Email</th>
                         <th>First Name</th>
                         <th>Last Name</th>
@@ -37,13 +44,23 @@ function AdminUsers() {
                 <tbody>
                     {users.map(user => (
                         <tr key={user.userId}>
+                            <td>{user.userId}</td>
                             <td>{user.email}</td>
-                            <td>{user.firstName}</td>
-                            <td>{user.lastName}</td>
+                            <td>{user.firstName || "N/A"}</td>
+                            <td>{user.lastName || "N/A"}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            <div>
+                <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}>
+                    Previous
+                </button>
+                <span> Page {page} of {totalPages} </span>
+                <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages}>
+                    Next
+                </button>
+            </div>
         </div>
     );
 }

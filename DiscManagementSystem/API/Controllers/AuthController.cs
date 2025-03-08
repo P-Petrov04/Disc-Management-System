@@ -33,7 +33,7 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        if (String.IsNullOrEmpty(model.Email) || String.IsNullOrEmpty(model.Password)) 
+        if (String.IsNullOrEmpty(model.Email) || String.IsNullOrEmpty(model.Password))
         {
             return BadRequest("Email or Password can't be null or empty");
         }

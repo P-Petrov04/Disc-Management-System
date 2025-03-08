@@ -5,34 +5,42 @@ import { getUserId } from "../utils/auth";
 function UserRentals() {
     const [rentals, setRentals] = useState([]);
     const userId = getUserId();
+    const token = localStorage.getItem("token");
 
     const fetchRentals = async () => {
-        if (!userId) return;
+        if (!userId || !token) return;
 
         try {
-            const response = await axios.get(`https://localhost:7254/api/rentals/my-rentals`, {
-                headers: {
-                    Authorization: `Bearer ${sessionStorage.getItem("token")}`
-                }
+            const rentalsResponse = await axios.get(`https://localhost:7254/api/rentals/my-rentals`, {
+                headers: { Authorization: `Bearer ${token}` }
             });
 
-            if (response.data && Array.isArray(response.data.data)) {
-                setRentals(response.data.data);
-            } else {
-                console.error("Unexpected API response format:", response.data);
-                setRentals([]);
-            }
+            const discsResponse = await axios.get(`https://localhost:7254/api/discs`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+
+            // ✅ Map disc ID to disc names
+            const discsMap = discsResponse.data.data.reduce((acc, disc) => {
+                acc[disc.discId] = disc.title || "Unknown";
+                return acc;
+            }, {});
+
+            // ✅ Add disc names to rentals
+            const rentalsWithDiscNames = rentalsResponse.data.data.map(rental => ({
+                ...rental,
+                discName: discsMap[rental.discId] || "Unknown"
+            }));
+
+            setRentals(rentalsWithDiscNames);
         } catch (error) {
             console.error("Error fetching rentals:", error);
-            setRentals([]);
         }
     };
 
     useEffect(() => {
-        fetchRentals(); // Initial fetch
-
-        const interval = setInterval(fetchRentals, 3000); // Fetch every 3 seconds
-        return () => clearInterval(interval); // Cleanup
+        fetchRentals();
+        const interval = setInterval(fetchRentals, 3000);
+        return () => clearInterval(interval);
     }, [userId]);
 
     return (
@@ -42,26 +50,22 @@ function UserRentals() {
                 <thead>
                     <tr>
                         <th>Disc ID</th>
+                        <th>Disc Name</th>
                         <th>Status</th>
                         <th>Rental Date</th>
                         <th>Return Date</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {rentals.length > 0 ? (
-                        rentals.map((rental) => (
-                            <tr key={rental.rentalId}>
-                                <td>{rental.discId}</td>
-                                <td>{rental.status}</td>
-                                <td>{rental.rentalDate ? new Date(rental.rentalDate).toLocaleDateString() : "N/A"}</td>
-                                <td>{rental.returnDate ? new Date(rental.returnDate).toLocaleDateString() : "Not Returned"}</td>
-                            </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td colSpan="4" className="text-center">No rentals found</td>
+                    {rentals.map(rental => (
+                        <tr key={rental.rentalId}>
+                            <td>{rental.discId}</td>
+                            <td>{rental.discName}</td>
+                            <td>{rental.status}</td>
+                            <td>{new Date(rental.rentalDate).toLocaleDateString()}</td>
+                            <td>{rental.returnDate ? new Date(rental.returnDate).toLocaleDateString() : "Not Returned"}</td>
                         </tr>
-                    )}
+                    ))}
                 </tbody>
             </table>
         </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import { setAuthData } from "../utils/auth";
 
 function Login({ setAuth }) {
@@ -26,9 +27,11 @@ function Login({ setAuth }) {
                 return;
             }
 
-            setAuthData(token, setAuth); // Update auth state
+            // ✅ Store user details and token in localStorage
+            setAuthData(token, setAuth);
+
             alert("Login successful!");
-            navigate("/all-discs"); // Navigate to All Discs
+            navigate("/all-discs");
         } catch (error) {
             console.error("Login failed:", error);
             alert("Invalid email or password.");

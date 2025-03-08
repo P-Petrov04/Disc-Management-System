@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.FileProviders;
 
 
 namespace API
@@ -36,7 +37,8 @@ namespace API
                 {
                     policy.AllowAnyOrigin()
                           .AllowAnyHeader()
-                          .AllowAnyMethod();
+                          .AllowAnyMethod()
+                          .SetIsOriginAllowed(origin => true); 
                 });
             });
 
@@ -89,8 +91,13 @@ namespace API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            app.UseStaticFiles();
-            
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+         Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"))
+            });
+
             app.UseHttpsRedirection();
 
 

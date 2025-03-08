@@ -94,7 +94,8 @@ public class DiscsController : ControllerBase
             }
 
             // Store the file URL
-            photoUrl = $"/images/{uniqueFileName}";
+            var baseUrl = $"{Request.Scheme}://{Request.Host}";
+            photoUrl = $"{baseUrl}/images/{uniqueFileName}";
         }
 
         Disc newDisc = new Disc()
@@ -113,9 +114,10 @@ public class DiscsController : ControllerBase
     }
 
     [HttpGet]
+    [HttpGet]
+    [HttpGet]
     public IActionResult GetDiscs(int? pageP = null, int? sizeP = null, string? title = null, string? artist = null)
     {
-        // Validate pagination parameters
         if (pageP.HasValue && sizeP.HasValue)
         {
             if (pageP < 1 || sizeP < 1)
@@ -124,26 +126,13 @@ public class DiscsController : ControllerBase
             }
         }
 
-        // Validate search parameters
-        if (!string.IsNullOrEmpty(title) && title.Length > 100)
-        {
-            return BadRequest("Title search parameter is too long.");
-        }
-
-        if (!string.IsNullOrEmpty(artist) && artist.Length > 100)
-        {
-            return BadRequest("Artist search parameter is too long.");
-        }
-
         var query = _discRepository.GetAll().AsQueryable();
 
-        // Search by disc name
         if (!string.IsNullOrEmpty(title))
         {
             query = query.Where(d => d.Title != null && d.Title.ToLower().Contains(title.ToLower()));
         }
 
-        // Search by artist name
         if (!string.IsNullOrEmpty(artist))
         {
             query = query.Where(d => d.Artist != null && d.Artist.ToLower().Contains(artist.ToLower()));
@@ -151,21 +140,49 @@ public class DiscsController : ControllerBase
 
         var totalDiscs = query.Count();
 
-        // Return error if no discs are found
         if (totalDiscs == 0)
         {
             return NotFound(new { Message = "No discs found matching your search criteria." });
         }
 
-        // Apply pagination if parameters are provided
         List<Disc> discs;
         if (pageP.HasValue && sizeP.HasValue)
         {
-            discs = query.Skip((pageP.Value - 1) * sizeP.Value).Take(sizeP.Value).ToList();
+            discs = query
+                .Skip((pageP.Value - 1) * sizeP.Value)
+                .Take(sizeP.Value)
+                .Select(d => new Disc
+                {
+                    DiscId = d.DiscId,
+                    Title = d.Title,
+                    Artist = d.Artist,
+                    ReleaseDate = d.ReleaseDate,
+                    Format = d.Format,
+                    IsAvailable = d.IsAvailable,
+                    DurationMinutes = d.DurationMinutes,
+                    PhotoUrl = d.PhotoUrl != null
+                        ? $"{Request.Scheme}://{Request.Host}{d.PhotoUrl}" // ✅ Fix URL here
+                        : null
+                })
+                .ToList();
         }
         else
         {
-            discs = query.ToList();
+            discs = query
+                .Select(d => new Disc
+                {
+                    DiscId = d.DiscId,
+                    Title = d.Title,
+                    Artist = d.Artist,
+                    ReleaseDate = d.ReleaseDate,
+                    Format = d.Format,
+                    IsAvailable = d.IsAvailable,
+                    DurationMinutes = d.DurationMinutes,
+                    PhotoUrl = d.PhotoUrl != null
+                        ? $"{Request.Scheme}://{Request.Host}{d.PhotoUrl}" // ✅ Fix URL here
+                        : null
+                })
+                .ToList();
         }
 
         return Ok(new
@@ -176,6 +193,7 @@ public class DiscsController : ControllerBase
             Data = discs
         });
     }
+
 
     [HttpPut("{id}")]
     [Authorize(Policy = "AdminOnly")]
