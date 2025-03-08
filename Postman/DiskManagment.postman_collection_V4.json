@@ -1,0 +1,1274 @@
+{
+	"info": {
+		"_postman_id": "a979e8ca-3f39-4b6a-bde7-8f20218dcf28",
+		"name": "DiskManagment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33457518",
+		"_collection_link": "https://fmistu.postman.co/workspace/Disc-Management-API~4d379bb6-045e-4e04-a8fb-54a716e12aca/collection/33457518-a979e8ca-3f39-4b6a-bde7-8f20218dcf28?action=share&source=collection_link&creator=33457518"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Login (POST) - Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"admin@email.com\",\r\n  \"password\": \"adminPassword\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7254/api/auth/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7254",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login (POST) - User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"userp12@gmail.com\",\r\n  \"password\": \"12345678910\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7254/api/auth/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7254",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "getting users",
+					"item": [
+						{
+							"name": "Getting users - email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"//https://localhost:7254/api/users?email=admin@email.com"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEzMDA5NTQsImV4cCI6MTc0MTkwNTc1NCwiaWF0IjoxNzQxMzAwOTU0fQ.-LpxWtY097hai_eN_rPIrLy_g8FwkckgZY-75w00AeI",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:7254/api/users?email=admin@email.com",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"users"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "admin@email.com"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Users Page 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"//https://localhost:7254/api/users?page=1&size=5"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEzNTM3MzYsImV4cCI6MTc0MTk1ODUzNiwiaWF0IjoxNzQxMzUzNzM2fQ.NHzBMTYJxOlVaaBe6u79LjW3vxHXxZNbPOKWMJGkxxc",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:7254/api/users?pageP=1&sizeP=5",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"users"
+									],
+									"query": [
+										{
+											"key": "pageP",
+											"value": "1"
+										},
+										{
+											"key": "sizeP",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Users Page 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"////https://localhost:7254/api/users?page=2&size=5"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEzNTM1NTAsImV4cCI6MTc0MTk1ODM1MCwiaWF0IjoxNzQxMzUzNTUwfQ.8AkyHGyIzawmny3LXOO1vbaT2iXHD4LM00N40V0aPwI",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:7254/api/users?pageP=2&sizeP=5",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"users"
+									],
+									"query": [
+										{
+											"key": "pageP",
+											"value": "2"
+										},
+										{
+											"key": "sizeP",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET All Users",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEzNTM3MzYsImV4cCI6MTc0MTk1ODUzNiwiaWF0IjoxNzQxMzUzNzM2fQ.NHzBMTYJxOlVaaBe6u79LjW3vxHXxZNbPOKWMJGkxxc",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:7254/api/users",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User CRUD",
+					"item": [
+						{
+							"name": "Create  User(POST) - Admin Only",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"/**{\r",
+											"    \"firstName\": \"test\",\r",
+											"    \"lastName\": \"user\",\r",
+											"    \"email\": \"testexample@gmail.com\",\r",
+											"    \"password\": \"123456789\",\r",
+											"    \"phoneNumber\": \"1234567890\"\r",
+											"} */"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEyOTcxNzcsImV4cCI6MTc0MTkwMTk3NywiaWF0IjoxNzQxMjk3MTc3fQ.y_wrPqFtGO_OZtwAA0KeffL7K23Bs8fhlY9DFc5ipjk",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"Userp\",\r\n    \"lastName\": \"zatest\",\r\n    \"email\": \"userp12@gmail.com\",\r\n    \"password\": \"12345678910\",\r\n    \"phoneNumber\": \"0899675669\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7254/api/users/create",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"users",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit  User(PUT) - Admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"/**{\r",
+											"    \"firstName\": \"test\",\r",
+											"    \"lastName\": \"user2\",\r",
+											"    \"email\": \"testexample@gmail.com\",\r",
+											"    \"password\": \"987654321\",\r",
+											"    \"phoneNumber\": \"1234567890\"\r",
+											"} */"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFkbWluQGVtYWlsLmNvbSIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTc0MDY2Nzg5OCwiZXhwIjoxNzQxMjcyNjk4LCJpYXQiOjE3NDA2Njc4OTh9.iR_Nn0kopvjR3pkuiI7ekqT1TwpUCsi8VlA9MGcNl0s",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"test2\",\r\n    \"lastName\": \"user2\",\r\n    \"email\": \"testexample@gmail.com\",\r\n    \"password\": \"11111\",\r\n    \"phoneNumber\": \"00000\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7254/api/users/5",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"users",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User - Admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"//https://localhost:7254/api/users/4"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEyOTcxNzcsImV4cCI6MTc0MTkwMTk3NywiaWF0IjoxNzQxMjk3MTc3fQ.y_wrPqFtGO_OZtwAA0KeffL7K23Bs8fhlY9DFc5ipjk",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7254/api/users/12",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"users",
+										"12"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Users CRUD operations"
+				}
+			]
+		},
+		{
+			"name": "Disc",
+			"item": [
+				{
+					"name": "getting discs",
+					"item": [
+						{
+							"name": "Get All Discs",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"//https://localhost:7254/api/discs"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Origin",
+										"value": "http://localhost:5174",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:7254/api/discs?includePagination=false",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"discs"
+									],
+									"query": [
+										{
+											"key": "includePagination",
+											"value": "false"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get  Discs - Title",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"//https://localhost:7254/api/discs\r",
+											"//https://localhost:7254/api/discs?title=testTitle\r",
+											"//https://localhost:7254/api/discs?title=testNo"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7254/api/discs?title=Album 1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"discs"
+									],
+									"query": [
+										{
+											"key": "title",
+											"value": "Album 1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get  Discs - Artists",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"//https://localhost:7254/api/discs\r",
+											"//https://localhost:7254/api/discs?artist=ivan\r",
+											"//https://localhost:7254/api/discs?artist=testArtist"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7254/api/discs?artist=Artist 1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"discs"
+									],
+									"query": [
+										{
+											"key": "artist",
+											"value": "Artist 1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Discs Page 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"//https://localhost:7254/api/discs?page=1&size=5"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:7254/api/discs?pageP=1&sizeP=5",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"discs"
+									],
+									"query": [
+										{
+											"key": "pageP",
+											"value": "1"
+										},
+										{
+											"key": "sizeP",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Discs Page 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"//https://localhost:7254/api/discs?page=2&size=5"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:7254/api/discs?pageP=2&sizeP=5",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"discs"
+									],
+									"query": [
+										{
+											"key": "pageP",
+											"value": "2"
+										},
+										{
+											"key": "sizeP",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Discs CRUD",
+					"item": [
+						{
+							"name": "Create Disc(POST) - Admin Only",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"//https://localhost:7254/api/discs/create\r",
+											"\r",
+											"/*\r",
+											"{\r",
+											"    \"title\": \"New Album\",\r",
+											"    \"artist\": \"Great Artist\",\r",
+											"    \"releasedate\": \"2024-01-01T00:00:00Z\",\r",
+											"    \"format\": \"Vinyl\",\r",
+											"    \"durationminutes\": 45\r",
+											"}\r",
+											" */"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEyODc4NDEsImV4cCI6MTc0MTg5MjY0MSwiaWF0IjoxNzQxMjg3ODQxfQ.QmV8mZd8dApJnIMxNdYw2_FNSnjXVKrhwEEgkktxClI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "Title",
+											"value": "Album 8",
+											"type": "text"
+										},
+										{
+											"key": "Artist",
+											"value": "Artist 8",
+											"type": "text"
+										},
+										{
+											"key": "ReleaseDate",
+											"value": "2024-02-02T00:00:00",
+											"type": "text"
+										},
+										{
+											"key": "Format",
+											"value": "DVD",
+											"type": "text"
+										},
+										{
+											"key": "DurationMinutes",
+											"value": "55",
+											"type": "text"
+										},
+										{
+											"key": "Photo",
+											"type": "file",
+											"src": "postman-cloud:///1effc46f-00f4-4ea0-8ea0-148c8976729a"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://localhost:7254/api/discs/create",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"discs",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit Disc(PUT) - Admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"//https://localhost:7254/api/discs/1\r",
+											"\r",
+											"/*\r",
+											"{\r",
+											"    \"title\": \"New Album 1\",\r",
+											"    \"artist\": \"Artist B.\",\r",
+											"    \"releasedate\": \"2023-01-01T00:00:00Z\",\r",
+											"    \"format\": \"CD\",\r",
+											"    \"durationminutes\": 25\r",
+											"} \r",
+											"*/"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEwMjcyOTIsImV4cCI6MTc0MTYzMjA5MiwiaWF0IjoxNzQxMDI3MjkyfQ._-nUg72AJfhfdkfY86VYj2I9DU5TQC4vIWknygo9s9s",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "Title ",
+											"value": "Updated Album Title",
+											"type": "text"
+										},
+										{
+											"key": "Artist",
+											"value": "Updated Artist",
+											"type": "text"
+										},
+										{
+											"key": "ReleaseDate ",
+											"value": "2024-03-03",
+											"type": "text"
+										},
+										{
+											"key": "Format",
+											"value": "Vinyl",
+											"type": "text"
+										},
+										{
+											"key": "DurationMinutes",
+											"value": "50",
+											"type": "text"
+										},
+										{
+											"key": "photoUrl",
+											"type": "file",
+											"src": "/E:/pu 2 year/KG/imgs/copy.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://localhost:7254/api/discs/11",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"discs",
+										"11"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Disc(Delete) - Admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"//https://localhost:7254/api/discs/1"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEyODU4MTQsImV4cCI6MTc0MTg5MDYxNCwiaWF0IjoxNzQxMjg1ODE0fQ.nEByLmbLZQB8BtNClBKlUI3sLdRzxllSoU-5mMhtrOA",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7254/api/discs/17",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"discs",
+										"17"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Rentals",
+			"item": [
+				{
+					"name": "getting rentals",
+					"item": [
+						{
+							"name": "Get All Rentals",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEzNTM5NjAsImV4cCI6MTc0MTk1ODc2MCwiaWF0IjoxNzQxMzUzOTYwfQ.wnU4JG7eSu3PVUCX5RoteiAWEnkPQ9WnH3XCIJOFXNk",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7254/api/rentals",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"rentals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Rentals Page 1",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEzMDA1NzksImV4cCI6MTc0MTkwNTM3OSwiaWF0IjoxNzQxMzAwNTc5fQ.QUlH01Zkw0i8g76QPE4i7MIBBlDr0NWQA0lrsV6Nz_8",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:7254/api/rentals?pageP=1&sizeP=5",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"rentals"
+									],
+									"query": [
+										{
+											"key": "pageP",
+											"value": "1"
+										},
+										{
+											"key": "sizeP",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Rentals Page 2",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEzMDM1MzAsImV4cCI6MTc0MTkwODMzMCwiaWF0IjoxNzQxMzAzNTMwfQ.7KuorJhK69lCSLs18mxE_i4VA48mCcmHdzy63EXznos",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:7254/api/rentals?pageP=2&sizeP=5",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"rentals"
+									],
+									"query": [
+										{
+											"key": "pageP",
+											"value": "2"
+										},
+										{
+											"key": "sizeP",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Rentals - DiscId",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEzMDA1NzksImV4cCI6MTc0MTkwNTM3OSwiaWF0IjoxNzQxMzAwNTc5fQ.QUlH01Zkw0i8g76QPE4i7MIBBlDr0NWQA0lrsV6Nz_8",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:7254/api/rentals?discId=10",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"rentals"
+									],
+									"query": [
+										{
+											"key": "discId",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Rentals - UserId",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEzMDA1NzksImV4cCI6MTc0MTkwNTM3OSwiaWF0IjoxNzQxMzAwNTc5fQ.QUlH01Zkw0i8g76QPE4i7MIBBlDr0NWQA0lrsV6Nz_8",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:7254/api/rentals?userId=2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"rentals"
+									],
+									"query": [
+										{
+											"key": "userId",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Rentals - Status",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEzMDA1NzksImV4cCI6MTc0MTkwNTM3OSwiaWF0IjoxNzQxMzAwNTc5fQ.QUlH01Zkw0i8g76QPE4i7MIBBlDr0NWQA0lrsV6Nz_8",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:7254/api/rentals?status=Active",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"rentals"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "Active"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Rentals - LoggedUser",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEzMDA1NzksImV4cCI6MTc0MTkwNTM3OSwiaWF0IjoxNzQxMzAwNTc5fQ.QUlH01Zkw0i8g76QPE4i7MIBBlDr0NWQA0lrsV6Nz_8",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7254/api/rentals/my-rentals?page=1&size=5",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"rentals",
+										"my-rentals"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "size",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Rentals CRUD",
+					"item": [
+						{
+							"name": "Create Rental(POST)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxMiIsInVuaXF1ZV9uYW1lIjoidXNlcnAxMkBnbWFpbC5jb20iLCJyb2xlIjoiVXNlciIsIm5iZiI6MTc0MTQ1NTU1NywiZXhwIjoxNzQyMDYwMzU3LCJpYXQiOjE3NDE0NTU1NTd9.KGJssZWbfIQRaqcCE9Vmlz2mxHfFPYmKnlFvngb0kxk",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"discId\": 17,\r\n    \"rentalDate\": \"2023-10-01T00:00:00\",\r\n    \"rentalDuration\": 10,\r\n    \"status\": \"Active\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7254/api/rentals/create",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"rentals",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit Rental(PUT)",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEyODg1OTgsImV4cCI6MTc0MTg5MzM5OCwiaWF0IjoxNzQxMjg4NTk4fQ.N6E-cbEjJ27pFgK1CrPu3Alnwq5GvE1YaTqM_JYUZP8",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"returnDate\": \"2023-11-09T00:00:00\",\r\n    \"status\": \"Returned\",\r\n    \"isRentalExceeded\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7254/api/rentals/27",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"rentals",
+										"27"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Rental",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxIiwidW5pcXVlX25hbWUiOiJhZG1pbkBlbWFpbC5jb20iLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NDEzMDAyMzMsImV4cCI6MTc0MTkwNTAzMywiaWF0IjoxNzQxMzAwMjMzfQ.OtsQoi0pOC8xHwGKvHNpISqpLyF7ECysdQtld1BXh0Y",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7254/api/rentals/27",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7254",
+									"path": [
+										"api",
+										"rentals",
+										"27"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
