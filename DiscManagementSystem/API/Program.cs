@@ -7,6 +7,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.OpenApi.Models;
 
 
 namespace API
@@ -51,7 +52,10 @@ namespace API
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Disc Management System", Version = "v1" });
+            });
 
             //Configure JWT Authentication
             var secretKey = builder.Configuration["JwtSettings:SecretKey"]
@@ -79,14 +83,6 @@ namespace API
 
             var app = builder.Build();
 
-
-
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
@@ -95,14 +91,18 @@ namespace API
 
             app.UseHttpsRedirection();
 
-
             app.UseCors("AllowAll");
-
 
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Disc Management System V1");
+            });
 
             using (var scope = app.Services.CreateScope())
             {
@@ -110,9 +110,6 @@ namespace API
                 var dbContext = services.GetRequiredService<ApplicationDbContext>();
                 dbContext.Database.Migrate();
             }
-
-
-
            
             app.Run();  
         }
